@@ -1,4 +1,4 @@
-package com.example.tp1.exception;
+package com.example.tp.exception;
 
 public class InvalidOrderException extends RuntimeException {
 

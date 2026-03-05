@@ -1,4 +1,4 @@
-package com.example.tp1.model;
+package com.example.tp.model;
 
 public enum OrderStatus {
     CREATED,

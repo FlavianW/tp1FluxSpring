@@ -1,6 +1,6 @@
-package com.example.tp1.repository;
+package com.example.tp.repository;
 
-import com.example.tp1.model.Product;
+import com.example.tp.model.Product;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 

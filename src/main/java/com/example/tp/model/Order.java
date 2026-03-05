@@ -1,4 +1,4 @@
-package com.example.tp1.model;
+package com.example.tp.model;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;

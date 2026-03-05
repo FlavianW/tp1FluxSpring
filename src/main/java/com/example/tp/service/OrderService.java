@@ -1,8 +1,8 @@
-package com.example.tp1.service;
+package com.example.tp.service;
 
-import com.example.tp1.exception.InvalidOrderException;
-import com.example.tp1.model.*;
-import com.example.tp1.repository.ProductRepository;
+import com.example.tp.exception.InvalidOrderException;
+import com.example.tp.model.*;
+import com.example.tp.repository.ProductRepository;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 

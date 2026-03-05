@@ -1,9 +1,9 @@
-package com.example.tp1;
+package com.example.tp;
 
-import com.example.tp1.exception.InvalidOrderException;
-import com.example.tp1.model.*;
-import com.example.tp1.repository.ProductRepository;
-import com.example.tp1.service.OrderService;
+import com.example.tp.exception.InvalidOrderException;
+import com.example.tp.model.*;
+import com.example.tp.repository.ProductRepository;
+import com.example.tp.service.OrderService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import reactor.core.publisher.Mono;
@@ -13,8 +13,6 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.Duration;
 import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
 import java.util.Random;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -60,7 +58,6 @@ class OrderServiceTest {
                     assertThat(order.getOrderId()).isNotNull();
                     assertThat(order.getStatus()).isIn(OrderStatus.COMPLETED, OrderStatus.FAILED);
                     if (order.getStatus() == OrderStatus.COMPLETED) {
-                        // seuls les produits valides sont traités
                         assertThat(order.getProducts().size()).isLessThanOrEqualTo(2);
                     }
                 })
@@ -69,7 +66,6 @@ class OrderServiceTest {
 
     @Test
     void test_processOrderWithoutStock() {
-        // PROD004 a un stock de 0
         OrderRequest request = new OrderRequest(
                 Arrays.asList("PROD004"),
                 "CUST001"
@@ -88,7 +84,6 @@ class OrderServiceTest {
 
     @Test
     void test_processOrderWithDiscounts() {
-        // PROD001 = electronique, PROD003 = mobilier
         OrderRequest request = new OrderRequest(
                 Arrays.asList("PROD001", "PROD003"),
                 "CUST001"
@@ -121,7 +116,6 @@ class OrderServiceTest {
 
     @Test
     void test_processOrderTimeout() {
-        // Créer un repository avec un délai > 5s
         ProductRepository slowRepo = new ProductRepository() {
             @Override
             public Mono<Product> findById(String id) {
@@ -146,7 +140,6 @@ class OrderServiceTest {
 
     @Test
     void test_processOrderWithErrors() {
-        // Repository qui échoue 50% du temps
         ProductRepository errorRepo = new ProductRepository() {
             private final Random random = new Random();
             @Override
@@ -167,7 +160,6 @@ class OrderServiceTest {
         StepVerifier.create(errorService.processOrder(request))
                 .assertNext(order -> {
                     assertThat(order.getOrderId()).isNotNull();
-                    // la commande est créée même avec des erreurs partielles
                     assertThat(order.getStatus()).isIn(OrderStatus.COMPLETED, OrderStatus.FAILED);
                 })
                 .verifyComplete();
